@@ -28,10 +28,10 @@
       <Label fx:id="wrongLabel" layoutX="264.0" layoutY="90.0" prefWidth="665.0" text="Category: Loading..." alignment="CENTER" textFill="#495057">
          <font>
             <Font name="System Bold" size="16.0" />
-            </font>
+         </font>
       </Label>
 
-      <!-- Secret Hidden Word Fields -->
+      <!-- Secret Hidden Word Fields / GAME OVER placement area -->
       <Label fx:id="wordLabel" layoutX="264.0" layoutY="140.0" prefWidth="665.0" text="_ _ _ _ _ _ _ _" alignment="CENTER">
          <font>
             <Font name="System Bold" size="36.0" />
@@ -39,7 +39,14 @@
       </Label>
 
       <!-- Central Hangman Graphics Canvas Frame -->
-      <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="330.0" layoutY="220.0" preserveRatio="true" />
+      <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="330.0" layoutY="210.0" preserveRatio="true" />
+
+      <!-- NEW: Correct Word Display Label placed below the picture and above the keys -->
+      <Label fx:id="correctWordLabel" layoutX="264.0" layoutY="565.0" prefWidth="665.0" alignment="CENTER" text="" textFill="#198754">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
 
       <!-- Bottom Interactive Alphabet Input Grid -->
       <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="620.0" prefHeight="120.0" prefWidth="1034.0" hgap="8.0" vgap="8.0" />
