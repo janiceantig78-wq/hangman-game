@@ -1,0 +1,23 @@
+package fr.quentincillierre.hangman.controller;
+
+import fr.quentincillierre.hangman.application.SceneManager;
+import javafx.fxml.FXML;
+
+import java.io.IOException;
+
+public class MenuController {
+
+    @FXML
+    private void onPlayClicked() {
+        try {
+            SceneManager.switchTo("game-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onExitClicked() {
+        System.exit(0);
+    }
+}

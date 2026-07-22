@@ -1,0 +1,146 @@
+/* ===== Shared background: dungeon stone wall image ===== */
+.screen-bg {
+    -fx-background-image: url('dungeon-background.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* ===== HUD badges (timer, wrong-guess counter) ===== */
+.hud-badge {
+    -fx-background-color: rgba(20, 15, 10, 0.6);
+    -fx-background-radius: 8;
+    -fx-border-color: #6b4423;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-text-fill: #ffd76a;
+}
+
+/* ===== Title: wooden hanging sign look ===== */
+.title-sign-panel {
+    -fx-background-color: linear-gradient(to bottom, #8a5a2e, #5c3a1a);
+    -fx-background-radius: 14;
+    -fx-border-color: #3b2410;
+    -fx-border-width: 4;
+    -fx-border-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 20, 0, 0, 8);
+}
+
+.title-label {
+    -fx-text-fill: linear-gradient(to bottom, #ffd76a, #f0a020);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 4, 0, 0, 2);
+}
+
+.subtitle-label {
+    -fx-text-fill: #c9cdd6;
+}
+
+.hud-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ===== Word display ===== */
+.word-label {
+    -fx-text-fill: white;
+    -fx-letter-spacing: 4px;
+}
+
+/* ===== Keyboard buttons ===== */
+.keyboard-button {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1e3c72;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0, 0, 1);
+}
+
+.keyboard-button:hover {
+    -fx-background-color: #f0c419;
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+.keyboard-button:pressed {
+    -fx-background-color: #d4a017;
+}
+
+.keyboard-button:disabled {
+    -fx-opacity: 0.35;
+}
+
+/* ===== Primary action buttons: wood-panel game buttons ===== */
+.primary-button {
+    -fx-background-color: linear-gradient(to bottom, #d99a3f, #a8641c);
+    -fx-text-fill: #3b2410;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-radius: 8;
+    -fx-border-color: #3b2410;
+    -fx-border-width: 3;
+    -fx-border-radius: 8;
+    -fx-padding: 14 40;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 4);
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #f0b862, #c07a28);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #a8641c;
+}
+
+.secondary-button {
+    -fx-background-color: linear-gradient(to bottom, #7c8a94, #57626b);
+    -fx-text-fill: #1c2126;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 8;
+    -fx-border-color: #2c3238;
+    -fx-border-width: 3;
+    -fx-border-radius: 8;
+    -fx-padding: 12 32;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 4);
+}
+
+.secondary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #93a1ab, #6b7680);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* ===== Game over overlay ===== */
+.overlay-bg {
+    -fx-background-color: rgba(10, 15, 35, 0.75);
+}
+
+.overlay-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 25, 0, 0, 8);
+}
+
+.overlay-title-win {
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+}
+
+.overlay-title-lose {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}
+
+.overlay-subtitle {
+    -fx-text-fill: #333333;
+}
+
+.root {
+    -fx-background-color: #2b2b2b;
+}
