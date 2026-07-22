@@ -10,20 +10,20 @@
 <?import javafx.scene.text.Font?>
 
 <!-- FIXED: Changed hardcoded background style attribute to follow a uniform CSS layout handle class instead -->
-<AnchorPane prefHeight="825.0" prefWidth="1193.0" styleClass="menu-root"
+<AnchorPane prefHeight="825.0" prefWidth="1193.0" minHeight="600.0" minWidth="900.0" styleClass="menu-root"
             xmlns="http://javafx.com" xmlns:fx="http://javafx.com" 
             fx:controller="fr.quentincillierre.hangman.controller.MenuController">
    <children>
       
       <!-- TOP ACTION BAR: Visual Theme Styling Toggle Controls Switcher -->
-      <HBox layoutX="1020.0" layoutY="30.0" alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" AnchorPane.topAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
             <Button text="🌓 Theme" onAction="#handleToggleTheme" style="-fx-font-size: 13px; -fx-padding: 6 12; -fx-cursor: hand; -fx-font-weight: bold;"/>
          </children>
       </HBox>
 
       <!-- CENTER PANEL COLLECTION: Primary Layout Context Interface Blocks -->
-      <VBox alignment="CENTER" spacing="25.0" prefHeight="825.0" prefWidth="1193.0">
+      <VBox alignment="CENTER" spacing="25.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <!-- Game Main Title -->
             <Label text="HANGMAN ADVENTURE" textFill="#220d75">

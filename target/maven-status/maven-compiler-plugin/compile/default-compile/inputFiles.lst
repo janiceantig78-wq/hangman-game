@@ -1,7 +1,7 @@
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\application\MainApp.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\controller\GameController.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\controller\MenuController.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\model\HangmanModel.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\model\ScoreManager.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\fr\quentincillierre\hangman\model\WordRepository.java
-C:\Users\jpnb01\Downloads\HANGMAN\src\main\java\module-info.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/application/MainApp.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/controller/GameController.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/controller/MenuController.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/model/HangmanModel.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/model/ScoreManager.java
+/home/oem/Desktop/hangman-game/src/main/java/fr/quentincillierre/hangman/model/WordRepository.java
+/home/oem/Desktop/hangman-game/src/main/java/module-info.java

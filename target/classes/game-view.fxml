@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="825.0" prefWidth="1193.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" fx:controller="fr.quentincillierre.hangman.controller.GameController">
+<AnchorPane prefHeight="700.0" prefWidth="1193.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" fx:controller="fr.quentincillierre.hangman.controller.GameController">
    <children>
       <!-- Top Action Controls Header Area -->
       <Button fx:id="resetButton" layoutX="50.0" layoutY="30.0" onAction="#resetGame" text="🔄 Reset Game" style="-fx-font-size: 13px; -fx-padding: 6 12; -fx-cursor: hand;" />
@@ -39,20 +39,20 @@
       </Label>
 
       <!-- Center Aligned Horizontal Box to Center the Gallows Drawing Perfectly -->
-      <HBox layoutX="0.0" layoutY="210.0" prefWidth="1193.0" alignment="CENTER">
+      <HBox layoutX="0.0" layoutY="185.0" prefWidth="1193.0" alignment="CENTER">
          <children>
-            <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" preserveRatio="true" />
+            <ImageView fx:id="hangmanView" fitHeight="260.0" fitWidth="415.0" preserveRatio="true" />
          </children>
       </HBox>
 
       <!-- End-Game Hidden Target Display Label -->
-      <Label fx:id="correctWordLabel" layoutX="264.0" layoutY="565.0" prefWidth="665.0" alignment="CENTER" text="">
+      <Label fx:id="correctWordLabel" layoutX="264.0" layoutY="455.0" prefWidth="665.0" alignment="CENTER" text="">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
 
       <!-- Bottom Interactive Alphabet Input Entry Grid -->
-      <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="620.0" prefHeight="120.0" prefWidth="1034.0" hgap="8.0" vgap="8.0" />
+      <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="500.0" prefHeight="120.0" prefWidth="1034.0" hgap="8.0" vgap="8.0" />
    </children>
 </AnchorPane>
