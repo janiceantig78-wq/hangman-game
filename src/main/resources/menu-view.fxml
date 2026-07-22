@@ -6,53 +6,76 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="25.0" prefHeight="825.0" prefWidth="1193.0" 
-      style="-fx-background-color: #f0f2f5;" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" 
-      fx:controller="fr.quentincillierre.hangman.controller.MenuController">
+<!-- FIXED: Changed hardcoded background style attribute to follow a uniform CSS layout handle class instead -->
+<AnchorPane prefHeight="825.0" prefWidth="1193.0" styleClass="menu-root"
+            xmlns="http://javafx.com" xmlns:fx="http://javafx.com" 
+            fx:controller="fr.quentincillierre.hangman.controller.MenuController">
    <children>
-      <!-- Game Main Title -->
-      <Label text="HANGMAN ADVENTURE" textFill="#220d75">
-         <font>
-            <Font name="Arial Bold" size="48.0" />
-         </font>
-         <effect>
-            <DropShadow color="#00000033" radius="5.0" />
-         </effect>
-      </Label>
       
-      <!-- Subtitle -->
-      <Label text="Can you save the character in time?" textFill="#555555">
-         <font>
-            <Font name="Arial Italic" size="18.0" />
-         </font>
-      </Label>
-
-      <!-- Selection Setup Configuration Dropdowns -->
-      <HBox alignment="CENTER" spacing="20.0">
+      <!-- TOP ACTION BAR: Visual Theme Styling Toggle Controls Switcher -->
+      <HBox layoutX="1020.0" layoutY="30.0" alignment="CENTER_RIGHT">
          <children>
-            <VBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                  <Label text="Select Category:" style="-fx-font-weight: bold;"/>
-                  <ComboBox fx:id="categoryBox" prefWidth="180.0" promptText="Programming" />
-               </children>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                  <Label text="Select Difficulty:" style="-fx-font-weight: bold;"/>
-                  <ComboBox fx:id="difficultyBox" prefWidth="150.0" promptText="Medium" />
-               </children>
-            </VBox>
+            <Button text="🌓 Theme" onAction="#handleToggleTheme" style="-fx-font-size: 13px; -fx-padding: 6 12; -fx-cursor: hand; -fx-font-weight: bold;"/>
          </children>
       </HBox>
 
-      <!-- Menu Navigation Actions -->
-      <VBox alignment="CENTER" spacing="15.0">
+      <!-- CENTER PANEL COLLECTION: Primary Layout Context Interface Blocks -->
+      <VBox alignment="CENTER" spacing="25.0" prefHeight="825.0" prefWidth="1193.0">
          <children>
-            <Button fx:id="startButton" minWidth="200.0" prefHeight="45.0" text="START GAME" onAction="#handleStartGame" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
-            <Button fx:id="exitButton" minWidth="200.0" prefHeight="45.0" text="EXIT" onAction="#handleExitGame" style="-fx-font-size: 16px;"/>
+            <!-- Game Main Title -->
+            <Label text="HANGMAN ADVENTURE" textFill="#220d75">
+               <font>
+                  <Font name="Arial Bold" size="48.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#00000033" radius="5.0" />
+               </effect>
+            </Label>
+            
+            <!-- Subtitle -->
+            <Label text="Can you save the character in time?" textFill="#555555">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+            </Label>
+
+            <!-- Selection Configuration Settings -->
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Select Category:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="categoryBox" prefWidth="180.0" promptText="Words A - G" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Select Difficulty:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="difficultyBox" prefWidth="150.0" promptText="Medium" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Local High-Scores Dashboard Display Card -->
+            <VBox alignment="CENTER" spacing="8.0" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #2a9d8f; -fx-border-width: 2; -fx-border-radius: 10;" maxWidth="450.0">
+                <children>
+                    <Label text="🏆 TOP LOCAL RUN RECORDS" style="-fx-font-weight: bold; -fx-font-size: 16px;" textFill="#2a9d8f"/>
+                    <Label fx:id="highScoresLabel" text="No scores recorded yet" textAlignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
+                </children>
+            </VBox>
+
+            <!-- Menu Navigation Actions -->
+            <VBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Button fx:id="startButton" minWidth="200.0" prefHeight="45.0" text="START GAME" onAction="#handleStartGame" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;"/>
+                  <Button fx:id="exitButton" minWidth="200.0" prefHeight="45.0" text="EXIT" onAction="#handleExitGame" style="-fx-font-size: 16px; -fx-cursor: hand;"/>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>
-</VBox>
+</AnchorPane>

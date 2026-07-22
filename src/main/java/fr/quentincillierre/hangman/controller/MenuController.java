@@ -70,4 +70,23 @@ public class MenuController {
         Platform.exit();
         System.exit(0);
     }
+        // Keep track of the active theme state globally across menu changes
+    private static boolean isDarkModeActive = false;
+
+    @FXML
+    private void handleToggleTheme(javafx.event.ActionEvent event) {
+        isDarkModeActive = !isDarkModeActive;
+        
+        // Find the active window canvas scene hierarchy
+        javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        
+        if (isDarkModeActive) {
+            // Apply the dark-theme CSS block properties instantly
+            scene.getRoot().getStyleClass().add("dark-theme");
+        } else {
+            // Remove the dark-theme CSS properties to return to light theme default settings
+            scene.getRoot().getStyleClass().remove("dark-theme");
+        }
+    }
+
 }
