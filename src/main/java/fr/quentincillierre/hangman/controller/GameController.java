@@ -1,5 +1,6 @@
 package fr.quentincillierre.hangman.controller;
 
+import fr.quentincillierre.hangman.application.MainApp;
 import fr.quentincillierre.hangman.model.HangmanModel;
 import fr.quentincillierre.hangman.model.WordRepository;
 import javafx.animation.KeyFrame;
@@ -18,10 +19,11 @@ public class GameController {
     @FXML private Label wrongLabel;
     @FXML private Label timerLabel;
     @FXML private Label pointsLabel; 
-    @FXML private Label correctWordLabel; // Bound the new layout display field
+    @FXML private Label correctWordLabel; 
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
     @FXML private Button resetButton;
+    @FXML private Button backMenuButton;
     @FXML private Button hintButton; 
 
     private HangmanModel game;
@@ -38,7 +40,6 @@ public class GameController {
         String word = repo.getRandomWord(MenuController.selectedCategory, MenuController.selectedDifficulty);
         game = new HangmanModel(word, MenuController.selectedDifficulty);
         
-        // Reset styles and labels back to clean defaults
         if (wordLabel != null) wordLabel.setStyle("-fx-text-fill: #212529;");
         if (correctWordLabel != null) correctWordLabel.setText("");
         
@@ -53,6 +54,14 @@ public class GameController {
         timeLeft = 60;
         keyboardGrid.getChildren().clear();
         startGameSession();
+    }
+
+    @FXML
+    private void handleBackToMenu() {
+        if (timer != null) {
+            timer.stop();
+        }
+        MainApp.switchScene("/menu-view.fxml");
     }
 
     @FXML
@@ -99,20 +108,17 @@ public class GameController {
         if (game.isWin()) {
             if (timer != null) timer.stop();
             wordLabel.setText("YOU WIN!");
-            wordLabel.setStyle("-fx-text-fill: #198754;"); // Green color for winning text
+            wordLabel.setStyle("-fx-text-fill: #198754;"); 
             if (correctWordLabel != null) {
                 correctWordLabel.setText("Word was: " + game.getWordToGuess());
-                correctWordLabel.setStyle("-fx-text-fill: #198754;"); // Green color for the word
+                correctWordLabel.setStyle("-fx-text-fill: #198754;"); 
             }
             disableAllButtons();
         } else if (game.isLose()) {
             if (timer != null) timer.stop();
-            
-            // FIXED: Only display "GAME OVER" in bright red color at the top text section
             wordLabel.setText("GAME OVER!");
             wordLabel.setStyle("-fx-text-fill: #dc3545;"); 
             
-            // FIXED: Place the secret answer at the bottom right above the keyboard text line styled in green
             if (correctWordLabel != null) {
                 correctWordLabel.setText("Correct Word: " + game.getWordToGuess());
                 correctWordLabel.setStyle("-fx-text-fill: #198754;"); 
