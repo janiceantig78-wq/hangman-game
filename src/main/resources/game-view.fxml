@@ -4,70 +4,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="825.0" prefWidth="1193.0" style="-fx-background-color: #f8f9fa;" 
-            xmlns="http://javafx.com" xmlns:fx="http://javafx.com" 
-            fx:controller="fr.quentincillierre.hangman.controller.GameController">
-    <children>
-        
-        <!-- LEFT CONTROL PANEL -->
-        <Button fx:id="resetButton" layoutX="50.0" layoutY="30.0" onAction="#resetGame" text="🔄 Reset Game" style="-fx-font-size: 14px; -fx-padding: 8 15;"/>
-        <Button fx:id="hintButton" layoutX="190.0" layoutY="30.0" onAction="#handleTriggerHint" text="💡 Use Hint (-30 pts)" style="-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-color: #ffc107; -fx-font-weight: bold;"/>
+<AnchorPane prefHeight="825.0" prefWidth="1193.0" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" fx:controller="fr.quentincillierre.hangman.controller.GameController">
+   <children>
+      <!-- Top Action Buttons -->
+      <Button fx:id="resetButton" layoutX="50.0" layoutY="30.0" onAction="#resetGame" text="🔄 Reset Game" />
+      <Button fx:id="hintButton" layoutX="170.0" layoutY="30.0" onAction="#handleTriggerHint" text="💡 Use Hint (-30 pts)" style="-fx-background-color: #ffc107;" />
 
-        <!-- RIGHT LIVE STATUS PANEL -->
-        <Label fx:id="timerLabel" layoutX="880.0" layoutY="35.0" text="⏳ Time: 60s" textFill="#dc3545" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-        <Label fx:id="pointsLabel" layoutX="1020.0" layoutY="35.0" text="💎 Points: 100" textFill="#198754" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+      <!-- Live Counters -->
+      <Label fx:id="timerLabel" layoutX="850.0" layoutY="35.0" text="Time: 60s" textFill="#dc3545" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+      <Label fx:id="pointsLabel" layoutX="1000.0" layoutY="35.0" text="Points: 100" textFill="#198754" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
 
-        <!-- CENTER GAME DATA CONTROLS -->
-        <Label fx:id="titleLabel" layoutX="460.0" layoutY="30.0" text="GUESS THE WORD!" textFill="#220d75">
-            <font>
-                <Font name="Arial Bold" size="30.0" />
+      <!-- Centered Header Titles -->
+      <Label fx:id="titleLabel" layoutX="450.0" layoutY="26.0" text="GUESS THE WORD!" textFill="#220d75">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+
+      <!-- Subtitle Information Bar -->
+      <Label fx:id="wrongLabel" layoutX="264.0" layoutY="90.0" prefWidth="665.0" text="Category: Loading..." alignment="CENTER" textFill="#495057">
+         <font>
+            <Font name="System Bold" size="16.0" />
             </font>
-        </Label>
+      </Label>
 
-        <!-- Category & Mistakes Status Subtitle -->
-        <Label fx:id="wrongLabel" layoutX="440.0" layoutY="110.0" text="Category: Loading... | Mistakes: 0 / 7" textFill="#495057" textAlignment="CENTER" prefWidth="400.0" alignment="CENTER">
-            <font>
-                <Font name="Arial Bold" size="16.0" />
-            </font>
-        </Label>
+      <!-- Secret Hidden Word Fields -->
+      <Label fx:id="wordLabel" layoutX="264.0" layoutY="140.0" prefWidth="665.0" text="_ _ _ _ _ _ _ _" alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
 
-        <!-- Hidden Secret Word Spaces -->
-        <Label fx:id="wordLabel" layoutX="200.0" layoutY="160.0" text="_ _ _ _ _ _ _ _" textAlignment="CENTER" alignment="CENTER" prefWidth="800.0" textFill="#212529">
-            <font>
-                <Font name="Courier New Bold" size="48.0" />
-            </font>
-        </Label>
+      <!-- Central Hangman Graphics Canvas Frame -->
+      <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="330.0" layoutY="220.0" preserveRatio="true" />
 
-        <!-- Isolated Hangman Graphics Window Frame -->
-        <ImageView fx:id="hangmanView" fitHeight="300.0" fitWidth="480.0" layoutX="360.0" layoutY="240.0" preserveRatio="true" />
-
-        <!-- BOTTOM INTERACTIVE KEYBOARD GRID -->
-        <GridPane fx:id="keyboardGrid" layoutX="120.0" layoutY="590.0" prefHeight="130.0" prefWidth="950.0" hgap="10.0" vgap="10.0" alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="45.0" prefWidth="65.0" alignment="CENTER"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="45.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="45.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-        </GridPane>
-
-    </children>
+      <!-- Bottom Interactive Alphabet Input Grid -->
+      <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="620.0" prefHeight="120.0" prefWidth="1034.0" hgap="8.0" vgap="8.0" />
+   </children>
 </AnchorPane>
