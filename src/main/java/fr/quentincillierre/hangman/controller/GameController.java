@@ -2,6 +2,7 @@ package fr.quentincillierre.hangman.controller;
 
 import fr.quentincillierre.hangman.application.MainApp;
 import fr.quentincillierre.hangman.model.HangmanModel;
+import fr.quentincillierre.hangman.model.ScoreManager;
 import fr.quentincillierre.hangman.model.WordRepository;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -107,8 +108,18 @@ public class GameController {
 
         if (game.isWin()) {
             if (timer != null) timer.stop();
-            wordLabel.setText("YOU WIN!");
+            
+            // PROGRESSIVE SCORING CALCULATION
+            int multiplier = MenuController.selectedDifficulty.equalsIgnoreCase("Hard") ? 3 : 
+                             MenuController.selectedDifficulty.equalsIgnoreCase("Medium") ? 2 : 1;
+            int finalCalculatedScore = game.getPlayerPoints() + (timeLeft * multiplier);
+            
+            // Save the score permanently to your local highscores file
+            ScoreManager.saveHighScore(finalCalculatedScore);
+
+            wordLabel.setText("YOU WIN! SCORE: " + finalCalculatedScore + " pts");
             wordLabel.setStyle("-fx-text-fill: #198754;"); 
+            
             if (correctWordLabel != null) {
                 correctWordLabel.setText("Word was: " + game.getWordToGuess());
                 correctWordLabel.setStyle("-fx-text-fill: #198754;"); 

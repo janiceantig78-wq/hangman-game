@@ -1,18 +1,22 @@
 package fr.quentincillierre.hangman.controller;
 
 import fr.quentincillierre.hangman.application.MainApp;
+import fr.quentincillierre.hangman.model.ScoreManager;
 import fr.quentincillierre.hangman.model.WordRepository;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MenuController {
 
     @FXML private ComboBox<String> categoryBox;
     @FXML private ComboBox<String> difficultyBox;
+    @FXML private Label highScoresLabel; // Binds your newly added scoreboard row element
 
-      
     public static String selectedCategory = "Words A - G";
     public static String selectedDifficulty = "Medium";
 
@@ -20,26 +24,36 @@ public class MenuController {
     public void initialize() {
         WordRepository repo = new WordRepository();
         
-        // Populate and guard category options safely
         if (categoryBox != null) {
             categoryBox.setItems(FXCollections.observableArrayList(repo.getAvailableCategories()));
             categoryBox.setValue(selectedCategory);
         }
         
-        // Populate and guard difficulty selection choices safely
         if (difficultyBox != null) {
             difficultyBox.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
             difficultyBox.setValue(selectedDifficulty);
+        }
+
+        // DYNAMIC LEADERBOARD RENDERING: Loads numerical runs data straight from text files
+        if (highScoresLabel != null) {
+            List<Integer> historicalScores = ScoreManager.loadHighScores();
+            if (!historicalScores.isEmpty()) {
+                String scoreRow = historicalScores.stream()
+                        .map(score -> score + " pts")
+                        .collect(Collectors.joining("  |  "));
+                highScoresLabel.setText(scoreRow);
+            } else {
+                highScoresLabel.setText("No scores recorded yet");
+            }
         }
     }
 
     @FXML
     private void handleStartGame() {
-        // Fallback default assignments if fields are null to prevent application freezes
         if (categoryBox != null && categoryBox.getValue() != null) {
             selectedCategory = categoryBox.getValue();
         } else {
-            selectedCategory = "Programming";
+            selectedCategory = "Words A - G";
         }
 
         if (difficultyBox != null && difficultyBox.getValue() != null) {
@@ -48,7 +62,6 @@ public class MenuController {
             selectedDifficulty = "Medium";
         }
         
-        // Transitions scene routing execution cleanly to the interactive play board
         MainApp.switchScene("/game-view.fxml");
     }
 
