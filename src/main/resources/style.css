@@ -110,3 +110,10 @@
     -fx-text-fill: #ffffff;
     -fx-background-color: #242529;
 }
+
+.menu-root {
+    -fx-background-image: url("hangman_menu_background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
