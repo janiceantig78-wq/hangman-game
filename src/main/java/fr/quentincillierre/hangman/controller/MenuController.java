@@ -18,10 +18,14 @@ public class MenuController {
     @FXML
     public void initialize() {
         WordRepository repo = new WordRepository();
+        
+        // Populate and guard category options safely
         if (categoryBox != null) {
             categoryBox.setItems(FXCollections.observableArrayList(repo.getAvailableCategories()));
             categoryBox.setValue(selectedCategory);
         }
+        
+        // Populate and guard difficulty selection choices safely
         if (difficultyBox != null) {
             difficultyBox.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
             difficultyBox.setValue(selectedDifficulty);
@@ -30,10 +34,21 @@ public class MenuController {
 
     @FXML
     private void handleStartGame() {
-        if (categoryBox != null) selectedCategory = categoryBox.getValue();
-        if (difficultyBox != null) selectedDifficulty = difficultyBox.getValue();
-        // Uses your active MainApp helper method
-        MainApp.switchScene("game-view.fxml");
+        // Fallback default assignments if fields are null to prevent application freezes
+        if (categoryBox != null && categoryBox.getValue() != null) {
+            selectedCategory = categoryBox.getValue();
+        } else {
+            selectedCategory = "Programming";
+        }
+
+        if (difficultyBox != null && difficultyBox.getValue() != null) {
+            selectedDifficulty = difficultyBox.getValue();
+        } else {
+            selectedDifficulty = "Medium";
+        }
+        
+        // Transitions scene routing execution cleanly to the interactive play board
+        MainApp.switchScene("/game-view.fxml");
     }
 
     @FXML
