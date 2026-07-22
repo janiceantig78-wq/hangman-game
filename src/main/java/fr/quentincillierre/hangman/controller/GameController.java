@@ -57,7 +57,8 @@ public class GameController {
 
     private void updateUI() {
         if (wordLabel != null) wordLabel.setText(game.getHiddenWord());
-        if (wrongLabel != null) wrongLabel.setText("Wrong: " + game.getCurrentWrongs() + " / 10");
+      InputStream imgStream = getClass().getResourceAsStream("/pictures/" + step + "-hangman.png");
+
         
         int step = Math.min(game.getCurrentWrongs(), 10);
         
