@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="825.0" prefWidth="1193.0" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" fx:controller="fr.quentincillierre.hangman.controller.GameController">
@@ -38,10 +39,14 @@
          </font>
       </Label>
 
-      <!-- Central Hangman Graphics Canvas Frame -->
-      <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="330.0" layoutY="210.0" preserveRatio="true" />
+      <!-- FIXED: Centering layout box containing your Hangman Illustration graphics -->
+      <HBox layoutX="0.0" layoutY="210.0" prefWidth="1193.0" alignment="CENTER">
+         <children>
+            <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" preserveRatio="true" />
+         </children>
+      </HBox>
 
-      <!-- NEW: Correct Word Display Label placed below the picture and above the keys -->
+      <!-- Correct Word Display Label placed below the picture and above the keys -->
       <Label fx:id="correctWordLabel" layoutX="264.0" layoutY="565.0" prefWidth="665.0" alignment="CENTER" text="" textFill="#198754">
          <font>
             <Font name="System Bold" size="24.0" />
