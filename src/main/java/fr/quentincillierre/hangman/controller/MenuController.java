@@ -5,9 +5,12 @@ import fr.quentincillierre.hangman.model.ScoreManager;
 import fr.quentincillierre.hangman.model.WordRepository;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +18,14 @@ public class MenuController {
 
     @FXML private ComboBox<String> categoryBox;
     @FXML private ComboBox<String> difficultyBox;
-    @FXML private Label highScoresLabel; // Binds your newly added scoreboard row element
+    @FXML private Label highScoresLabel; 
+    @FXML private AnchorPane menuRootPane; 
+    @FXML private VBox scoreCardBox;       
 
     public static String selectedCategory = "Words A - G";
     public static String selectedDifficulty = "Medium";
+    
+    private static boolean isDarkModeActive = false;
 
     @FXML
     public void initialize() {
@@ -34,7 +41,6 @@ public class MenuController {
             difficultyBox.setValue(selectedDifficulty);
         }
 
-        // DYNAMIC LEADERBOARD RENDERING: Loads numerical runs data straight from text files
         if (highScoresLabel != null) {
             List<Integer> historicalScores = ScoreManager.loadHighScores();
             if (!historicalScores.isEmpty()) {
@@ -46,6 +52,8 @@ public class MenuController {
                 highScoresLabel.setText("No scores recorded yet");
             }
         }
+        
+        applyThemeState();
     }
 
     @FXML
@@ -70,23 +78,32 @@ public class MenuController {
         Platform.exit();
         System.exit(0);
     }
-        // Keep track of the active theme state globally across menu changes
-    private static boolean isDarkModeActive = false;
 
     @FXML
-    private void handleToggleTheme(javafx.event.ActionEvent event) {
+    private void handleToggleTheme(ActionEvent event) {
         isDarkModeActive = !isDarkModeActive;
-        
-        // Find the active window canvas scene hierarchy
-        javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
-        
-        if (isDarkModeActive) {
-            // Apply the dark-theme CSS block properties instantly
-            scene.getRoot().getStyleClass().add("dark-theme");
-        } else {
-            // Remove the dark-theme CSS properties to return to light theme default settings
-            scene.getRoot().getStyleClass().remove("dark-theme");
-        }
+        applyThemeState();
     }
 
+    private void applyThemeState() {
+        if (menuRootPane == null) return;
+        
+        if (isDarkModeActive) {
+            menuRootPane.setStyle("-fx-background-color: #2b2b2b;");
+            if (scoreCardBox != null) {
+                scoreCardBox.setStyle("-fx-background-color: #3c3f41; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #2a9d8f; -fx-border-width: 2; -fx-border-radius: 10;");
+            }
+            if (highScoresLabel != null) {
+                highScoresLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold;");
+            }
+        } else {
+            menuRootPane.setStyle("-fx-background-color: #f0f2f5;");
+            if (scoreCardBox != null) {
+                scoreCardBox.setStyle("-fx-background-color: #ffffff; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #2a9d8f; -fx-border-width: 2; -fx-border-radius: 10;");
+            }
+            if (highScoresLabel != null) {
+                highScoresLabel.setStyle("-fx-text-fill: #333333; -fx-font-size: 14px; -fx-font-weight: bold;");
+            }
+        }
+    }
 }

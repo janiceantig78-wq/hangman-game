@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<!-- FIXED: Changed hardcoded background style attribute to follow a uniform CSS layout handle class instead -->
-<AnchorPane prefHeight="825.0" prefWidth="1193.0" styleClass="menu-root"
+<!-- FIXED: Removed the inline style attribute to allow programmatic theme swapping -->
+<AnchorPane fx:id="menuRootPane" prefHeight="825.0" prefWidth="1193.0"
             xmlns="http://javafx.com" xmlns:fx="http://javafx.com" 
             fx:controller="fr.quentincillierre.hangman.controller.MenuController">
    <children>
@@ -31,7 +31,7 @@
                   <Font name="Arial Bold" size="48.0" />
                </font>
                <effect>
-                  <DropShadow color="#00000033" radius="5.0" />
+                  <DropShadow color="00000033" radius="5.0" />
                </effect>
             </Label>
             
@@ -61,7 +61,7 @@
             </HBox>
 
             <!-- Local High-Scores Dashboard Display Card -->
-            <VBox alignment="CENTER" spacing="8.0" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #2a9d8f; -fx-border-width: 2; -fx-border-radius: 10;" maxWidth="450.0">
+            <VBox fx:id="scoreCardBox" alignment="CENTER" spacing="8.0" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #2a9d8f; -fx-border-width: 2; -fx-border-radius: 10;" maxWidth="450.0">
                 <children>
                     <Label text="🏆 TOP LOCAL RUN RECORDS" style="-fx-font-weight: bold; -fx-font-size: 16px;" textFill="#2a9d8f"/>
                     <Label fx:id="highScoresLabel" text="No scores recorded yet" textAlignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
