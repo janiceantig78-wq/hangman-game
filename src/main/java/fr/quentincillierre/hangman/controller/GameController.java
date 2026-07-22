@@ -17,11 +17,11 @@ public class GameController {
     @FXML private Label wordLabel;
     @FXML private Label wrongLabel;
     @FXML private Label timerLabel;
-    @FXML private Label pointsLabel; // Newly bound points tracker label
+    @FXML private Label pointsLabel; 
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
     @FXML private Button resetButton;
-    @FXML private Button hintButton; // Newly bound hint selection button
+    @FXML private Button hintButton; 
 
     private HangmanModel game;
     private Timeline timer;
@@ -57,7 +57,7 @@ public class GameController {
         char hintLetter = game.getRevealHintLetter();
         if (hintLetter != ' ') {
             game.deductPoints(30);
-            game.tryLetter(hintLetter); // Automatically processes the character match
+            game.tryLetter(hintLetter); 
             updateUI();
         }
     }
@@ -107,6 +107,13 @@ public class GameController {
     }
 
     private void buildKeyboard() {
+        keyboardGrid.getChildren().clear();
+        
+        // Center the keyboard grid layout horizontally and vertically
+        keyboardGrid.setAlignment(javafx.geometry.Pos.CENTER);
+        keyboardGrid.setHgap(12.0); 
+        keyboardGrid.setVgap(12.0);
+
         String[] rows = {"ABCDEFGHIJKLM", "NOPQRSTUVWXYZ"};
         int rowNum = 0;
         for (String row : rows) {
@@ -114,7 +121,13 @@ public class GameController {
             for (char c : row.toCharArray()) {
                 Button btn = new Button(String.valueOf(c));
                 btn.getStyleClass().add("keyboard-button");
-                btn.setPrefSize(45, 45);
+                
+                // Enlarge buttons for better gameplay interaction
+                btn.setPrefSize(60, 55); 
+                
+                // Set bold text styling and larger font size
+                btn.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;");
+                
                 btn.setOnAction(e -> handleGuess(c, btn));
                 keyboardGrid.add(btn, colNum, rowNum);
                 colNum++;
