@@ -10,7 +10,7 @@ public class HangmanModel {
     private int maxWrongs;
     private int playerPoints;
 
-    // Upgraded Constructor: Accepts word and difficulty configuration
+    // Constructor: Accepts word and difficulty configuration
     public HangmanModel(String wordToGuess, String difficulty) {
         this.wordToGuess = wordToGuess.toUpperCase();
         this.guessedLetters = new HashSet<>();
@@ -45,6 +45,10 @@ public class HangmanModel {
 
     public void deductPoints(int amount) {
         this.playerPoints = Math.max(0, this.playerPoints - amount);
+    }
+
+    public void awardPoints(int amount) {
+        this.playerPoints += amount;
     }
 
     public void tryLetter(char letter) {
