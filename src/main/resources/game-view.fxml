@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns:fx="http://javafx.com"
     fx:controller="fr.quentincillierre.hangman.controller.GameController"
     maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="825.0" prefWidth="1193.0"
-    xmlns="http://javafx.com/javafx/26">
+    xmlns="http://javafx.com">
 
     <children>
         <!-- Title Label -->
@@ -46,6 +46,13 @@
         <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="246.0" layoutY="217.0"
             preserveRatio="true"
             AnchorPane.bottomAnchor="270.0" AnchorPane.topAnchor="217.0" />
+
+        <!-- Wrong Guesses Counter Label (Fixed Missing Label) -->
+        <Label fx:id="wrongLabel" layoutX="330.0" layoutY="570.0" prefHeight="30.0" prefWidth="400.0">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
 
         <!-- Result Label -->
         <Label fx:id="resultLabel" layoutX="330.0" layoutY="619.0" prefHeight="30.0" prefWidth="849.0"

@@ -11,14 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import java.io.InputStream;
 
 public class GameController {
     @FXML private Label wordLabel;
     @FXML private Label wrongLabel;
-    @FXML private Label timerLabel;
+    @FXML private Label timerLabel; // Safely crash-proofed below
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
-    @FXML private Button reseButton;
+    @FXML private Button resetButton; // Fixed variable name typo
 
     private HangmanModel game;
     private Timeline timer;
@@ -40,7 +41,7 @@ public class GameController {
         }
         WordRepository repo = new WordRepository();
         game = new HangmanModel(repo.getRandomWord());
-        timeLeft = 60; // reset timer
+        timeLeft = 60; 
         startTimer();
         updateUI();
         enableAllButtons();
@@ -55,19 +56,31 @@ public class GameController {
     }
 
     private void updateUI() {
-        wordLabel.setText(game.getHiddenWord());
-        wrongLabel.setText("Wrong: " + game.getCurrentWrongs() + " / 10");
+        if (wordLabel != null) wordLabel.setText(game.getHiddenWord());
+        if (wrongLabel != null) wrongLabel.setText("Wrong: " + game.getCurrentWrongs() + " / 10");
+        
         int step = Math.min(game.getCurrentWrongs(), 10);
-        Image img = new Image(getClass().getClassLoader().getResource("pictures/" + step + "-hangman.png").toExternalForm());
-        hangmanView.setImage(img);
+        
+        // Fixed: Modular-safe stream-based resource loading
+        try {
+            InputStream imgStream = getClass().getResourceAsStream("/pictures/" + step + "-hangman.png");
+            if (imgStream != null) {
+                Image img = new Image(imgStream);
+                hangmanView.setImage(img);
+            } else {
+                System.out.println("Warning: Image file not found at: /pictures/" + step + "-hangman.png");
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading image: " + e.getMessage());
+        }
 
         if (game.isWin()) {
-            timer.stop();
-            wordLabel.setText("YOU WIN! Word: " + game.getWordToGuess());
+            if (timer != null) timer.stop();
+            if (wordLabel != null) wordLabel.setText("YOU WIN! Word: " + game.getWordToGuess());
             disableAllButtons();
         } else if (game.isLose()) {
-            timer.stop();
-            wordLabel.setText("GAME OVER! Word: " + game.getWordToGuess());
+            if (timer != null) timer.stop();
+            if (wordLabel != null) wordLabel.setText("GAME OVER! Word: " + game.getWordToGuess());
             disableAllButtons();
         }
     }
@@ -107,7 +120,9 @@ public class GameController {
     private void startTimer() {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             timeLeft--;
-            timerLabel.setText("Time: " + timeLeft + "s");
+            if (timerLabel != null) {
+                timerLabel.setText("Time: " + timeLeft + "s");
+            }
             if (timeLeft <= 0) {
                 timer.stop();
                 while (!game.isLose()) game.tryLetter('X');
