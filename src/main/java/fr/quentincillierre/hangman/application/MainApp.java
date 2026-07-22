@@ -10,22 +10,25 @@ public class MainApp extends Application {
     
     private static Stage primaryStage;
 
-    
-        // Load the Menu first
-         @Override
+    @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         primaryStage.setTitle("Hangman Game");
         
-        // Remove the forward slash so JavaFX searches the resources package root path correctly
-        switchScene("menu-view.fxml");
+        // FIXED: Added absolute forward slash root indicator
+        switchScene("/menu-view.fxml");
         primaryStage.show();
     }
 
-    // This is the missing method that fixes your compilation error!
     public static void switchScene(String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(fxmlPath));
+            // FIXED: Uses full absolute path tracking
+            java.net.URL fxmlUrl = MainApp.class.getResource(fxmlPath);
+            if (fxmlUrl == null) {
+                throw new IllegalStateException("Cannot find layout asset file at path: " + fxmlPath);
+            }
+            
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
             
             Scene scene = primaryStage.getScene();
