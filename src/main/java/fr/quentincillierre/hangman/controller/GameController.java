@@ -16,10 +16,10 @@ import java.io.InputStream;
 public class GameController {
     @FXML private Label wordLabel;
     @FXML private Label wrongLabel;
-    @FXML private Label timerLabel; // Safely crash-proofed below
+    @FXML private Label timerLabel;
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
-    @FXML private Button resetButton; // Fixed variable name typo
+    @FXML private Button resetButton;
 
     private HangmanModel game;
     private Timeline timer;
@@ -27,8 +27,16 @@ public class GameController {
 
     @FXML
     public void initialize() {
+        startGameSession();
+    }
+
+
+    private void startGameSession() {
         WordRepository repo = new WordRepository();
-        game = new HangmanModel(repo.getRandomWord());
+        // Reads configuration dynamically from MenuController selections
+        String word = repo.getRandomWord(MenuController.selectedCategory, MenuController.selectedDifficulty);
+        game = new HangmanModel(word, MenuController.selectedDifficulty);
+        
         updateUI();
         buildKeyboard();
         startTimer();
@@ -36,61 +44,51 @@ public class GameController {
 
     @FXML
     public void resetGame() {
-        if (timer != null) {
-            timer.stop();
-        }
-        WordRepository repo = new WordRepository();
-        game = new HangmanModel(repo.getRandomWord());
-        timeLeft = 60; 
-        startTimer();
-        updateUI();
-        enableAllButtons();
-    }
-
-    private void enableAllButtons() {
-        for (javafx.scene.Node node : keyboardGrid.getChildren()) {
-            if (node instanceof Button) {
-                ((Button) node).setDisable(false);
-            }
-        }
+        if (timer != null) timer.stop();
+        timeLeft = 60;
+        keyboardGrid.getChildren().clear();
+        startGameSession();
     }
 
     private void updateUI() {
         if (wordLabel != null) wordLabel.setText(game.getHiddenWord());
-      InputStream imgStream = getClass().getResourceAsStream("/pictures/" + step + "-hangman.png");
-
         
-        int step = Math.min(game.getCurrentWrongs(), 10);
+        // Dynamic mistake counter matching dynamic maximum error thresholds
+        if (wrongLabel != null) {
+            wrongLabel.setText("Category: " + MenuController.selectedCategory + 
+                               " | Mistakes: " + game.getCurrentWrongs() + " / " + game.getMaxWrongs());
+        }
         
-        // Fixed: Modular-safe stream-based resource loading
+        // Safeguard to scale image changes down cleanly to fit harder constraints (max 5 errors)
+        int step = game.getCurrentWrongs();
+        if (game.getMaxWrongs() == 5) {
+            step = game.getCurrentWrongs() * 2; // Scales drawing progress linearly
+        }
+        step = Math.min(step, 10);
+        
         try {
             InputStream imgStream = getClass().getResourceAsStream("/pictures/" + step + "-hangman.png");
             if (imgStream != null) {
-                Image img = new Image(imgStream);
-                hangmanView.setImage(img);
-            } else {
-                System.out.println("Warning: Image file not found at: /pictures/" + step + "-hangman.png");
+                hangmanView.setImage(new Image(imgStream));
             }
         } catch (Exception e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            System.err.println("Error rendering hangman graphic assets: " + e.getMessage());
         }
 
         if (game.isWin()) {
             if (timer != null) timer.stop();
-            if (wordLabel != null) wordLabel.setText("YOU WIN! Word: " + game.getWordToGuess());
+            wordLabel.setText("YOU WIN! Word: " + game.getWordToGuess());
             disableAllButtons();
         } else if (game.isLose()) {
             if (timer != null) timer.stop();
-            if (wordLabel != null) wordLabel.setText("GAME OVER! Word: " + game.getWordToGuess());
+            wordLabel.setText("GAME OVER! Word: " + game.getWordToGuess());
             disableAllButtons();
         }
     }
 
     private void disableAllButtons() {
         for (javafx.scene.Node node : keyboardGrid.getChildren()) {
-            if (node instanceof Button) {
-                ((Button) node).setDisable(true);
-            }
+            if (node instanceof Button) ((Button) node).setDisable(true);
         }
     }
 
@@ -121,9 +119,7 @@ public class GameController {
     private void startTimer() {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             timeLeft--;
-            if (timerLabel != null) {
-                timerLabel.setText("Time: " + timeLeft + "s");
-            }
+            if (timerLabel != null) timerLabel.setText("Time: " + timeLeft + "s");
             if (timeLeft <= 0) {
                 timer.stop();
                 while (!game.isLose()) game.tryLetter('X');

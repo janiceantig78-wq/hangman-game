@@ -1,35 +1,56 @@
 package fr.quentincillierre.hangman.model;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class WordRepository {
-    private final List<String> words = new ArrayList<>();
+    private final Map<String, List<String>> categories = new HashMap<>();
     private final Random random = new Random();
 
     public WordRepository() {
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("words.txt");
-             BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
-                if (!line.isEmpty()) words.add(line);
-            }
-        } catch (Exception e) {
-            words.add("DUNGEON");
-            words.add("SWORD");
-            words.add("SHIELD");
-            words.add("GHOST");
-            words.add("TREASURE");
-            words.add("DRAGON");
-        }
+        categories.put("Programming", Arrays.asList(
+            "JAVA", "JAVAFX", "PYTHON", "COMPILER", "VARIABLE", 
+            "RECURSION", "INTERFACE", "REPOS", "DEVELOPER", "ALGORITHM"
+        ));
+
+        categories.put("Animals", Arrays.asList(
+            "CAT", "DOG", "ELEPHANT", "GIRAFFE", "KANGAROO", 
+            "LEOPARD", "DOLPHIN", "CHIMPANZEE", "PENGUIN", "TIGER"
+        ));
+
+        categories.put("Countries", Arrays.asList(
+            "FRANCE", "PHILIPPINES", "CANADA", "JAPAN", "GERMANY", 
+            "AUSTRALIA", "BRAZIL", "SINGAPORE", "INDONESIA", "MEXICO"
+        ));
     }
 
-    public String getRandomWord() {
-        return words.get(random.nextInt(words.size()));
+    public List<String> getAvailableCategories() {
+        return new ArrayList<>(categories.keySet());
+    }
+
+    public String getRandomWord(String category, String difficulty) {
+        List<String> wordPool = categories.getOrDefault(category, categories.get("Programming"));
+        List<String> filteredWords = new ArrayList<>();
+
+        for (String word : wordPool) {
+            int len = word.length();
+            if (difficulty.equalsIgnoreCase("Easy") && len <= 5) {
+                filteredWords.add(word);
+            } else if (difficulty.equalsIgnoreCase("Medium") && len >= 6 && len <= 7) {
+                filteredWords.add(word);
+            } else if (difficulty.equalsIgnoreCase("Hard") && len >= 8) {
+                filteredWords.add(word);
+            }
+        }
+
+        if (filteredWords.isEmpty()) {
+            return wordPool.get(random.nextInt(wordPool.size()));
+        }
+
+        return filteredWords.get(random.nextInt(filteredWords.size()));
     }
 }
