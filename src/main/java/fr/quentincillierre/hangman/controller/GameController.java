@@ -17,9 +17,11 @@ public class GameController {
     @FXML private Label wordLabel;
     @FXML private Label wrongLabel;
     @FXML private Label timerLabel;
+    @FXML private Label pointsLabel; // Newly bound points tracker label
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
     @FXML private Button resetButton;
+    @FXML private Button hintButton; // Newly bound hint selection button
 
     private HangmanModel game;
     private Timeline timer;
@@ -30,10 +32,8 @@ public class GameController {
         startGameSession();
     }
 
-
     private void startGameSession() {
         WordRepository repo = new WordRepository();
-        // Reads configuration dynamically from MenuController selections
         String word = repo.getRandomWord(MenuController.selectedCategory, MenuController.selectedDifficulty);
         game = new HangmanModel(word, MenuController.selectedDifficulty);
         
@@ -50,19 +50,33 @@ public class GameController {
         startGameSession();
     }
 
+    @FXML
+    private void handleTriggerHint() {
+        if (game.isWin() || game.isLose() || game.getPlayerPoints() < 30) return;
+        
+        char hintLetter = game.getRevealHintLetter();
+        if (hintLetter != ' ') {
+            game.deductPoints(30);
+            game.tryLetter(hintLetter); // Automatically processes the character match
+            updateUI();
+        }
+    }
+
     private void updateUI() {
         if (wordLabel != null) wordLabel.setText(game.getHiddenWord());
         
-        // Dynamic mistake counter matching dynamic maximum error thresholds
         if (wrongLabel != null) {
             wrongLabel.setText("Category: " + MenuController.selectedCategory + 
                                " | Mistakes: " + game.getCurrentWrongs() + " / " + game.getMaxWrongs());
         }
+
+        if (pointsLabel != null) {
+            pointsLabel.setText("Points: " + game.getPlayerPoints());
+        }
         
-        // Safeguard to scale image changes down cleanly to fit harder constraints (max 5 errors)
         int step = game.getCurrentWrongs();
         if (game.getMaxWrongs() == 5) {
-            step = game.getCurrentWrongs() * 2; // Scales drawing progress linearly
+            step = game.getCurrentWrongs() * 2; 
         }
         step = Math.min(step, 10);
         
@@ -72,7 +86,7 @@ public class GameController {
                 hangmanView.setImage(new Image(imgStream));
             }
         } catch (Exception e) {
-            System.err.println("Error rendering hangman graphic assets: " + e.getMessage());
+            System.err.println("Error rendering assets: " + e.getMessage());
         }
 
         if (game.isWin()) {

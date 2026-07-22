@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns:fx="http://javafx.com"
@@ -18,56 +19,43 @@
     xmlns="http://javafx.com">
 
     <children>
+        <!-- Top Info Header Bar (New Hint, Timer, and Points display metrics) -->
+        <HBox layoutX="50.0" layoutY="20.0" spacing="40.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Button fx:id="resetButton" text="Reset Game" onAction="#resetGame" style="-fx-font-size: 14px;"/>
+                <Button fx:id="hintButton" text="💡 Use Hint (-30 pts)" onAction="#handleTriggerHint" style="-fx-font-size: 14px; -fx-background-color: #ffc107; -fx-font-weight: bold;"/>
+                <Label fx:id="timerLabel" text="Time: 60s" textFill="#e63946" style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
+                <Label fx:id="pointsLabel" text="Points: 100" textFill="#2a9d8f" style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
+            </children>
+        </HBox>
+
         <!-- Title Label -->
-        <Label fx:id="titleLabel" layoutX="264.0" layoutY="20.0" prefHeight="40.0" prefWidth="1193.0"
-            text="GUESS THE WORD!" textAlignment="CENTER" textFill="#220d75" wrapText="true"
-            AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="-264.0" AnchorPane.topAnchor="26.0">
+        <Label fx:id="titleLabel" layoutX="480.0" layoutY="20.0" text="GUESS THE WORD!" textFill="#220d75">
             <font>
-                <Font name="Arial Bold" size="37.0" />
+                <Font name="Arial Bold" size="32.0" />
             </font>
-            <effect>
-                <Blend />
-            </effect>
         </Label>
 
-        <!-- Reset Button -->
-        <Button fx:id="resetButton" layoutX="50" layoutY="100" text="Reset Game" onAction="#resetGame"/>
-
         <!-- Word Label -->
-        <Label fx:id="wordLabel" layoutX="304.0" layoutY="66.0" prefHeight="66.0" prefWidth="201.0"
-            text="_ _ _ _ _ _ _ _"
-            AnchorPane.leftAnchor="304.0" AnchorPane.rightAnchor="-264.0" AnchorPane.topAnchor="66.0">
+        <Label fx:id="wordLabel" layoutX="330.0" layoutY="120.0" prefHeight="66.0" text="_ _ _ _ _ _ _ _">
             <font>
-                <Font size="24.0" />
+                <Font name="Courier New Bold" size="36.0" />
             </font>
         </Label>
 
         <!-- Hangman Image -->
-        <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="246.0" layoutY="217.0"
-            preserveRatio="true"
-            AnchorPane.bottomAnchor="270.0" AnchorPane.topAnchor="217.0" />
+        <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" layoutX="330.0" layoutY="200.0" preserveRatio="true" />
 
-        <!-- Wrong Guesses Counter Label (Fixed Missing Label) -->
-        <Label fx:id="wrongLabel" layoutX="330.0" layoutY="570.0" prefHeight="30.0" prefWidth="400.0">
+        <!-- Wrong Guesses Counter Label -->
+        <Label fx:id="wrongLabel" layoutX="330.0" layoutY="570.0" prefHeight="30.0" prefWidth="600.0">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
 
-        <!-- Result Label -->
-        <Label fx:id="resultLabel" layoutX="330.0" layoutY="619.0" prefHeight="30.0" prefWidth="849.0"
-            AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="619.0">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Label>
-
         <!-- Keyboard Grid -->
-        <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="696.0" prefHeight="60.0" prefWidth="1034.0"
-            hgap="8.0" vgap="8.0"
-            AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="696.0">
+        <GridPane fx:id="keyboardGrid" layoutX="70.0" layoutY="650.0" prefHeight="100.0" prefWidth="1034.0" hgap="8.0" vgap="8.0">
             <columnConstraints>
-                <!-- 13 columns -->
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -83,16 +71,9 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
     </children>
-
-    <cursor>
-        <Cursor fx:constant="CROSSHAIR" />
-    </cursor>
-    <effect>
-        <DropShadow />
-    </effect>
 </AnchorPane>
