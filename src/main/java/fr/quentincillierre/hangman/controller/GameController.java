@@ -18,6 +18,7 @@ public class GameController {
     @FXML private Label wrongLabel;
     @FXML private Label timerLabel;
     @FXML private Label pointsLabel; 
+    @FXML private Label correctWordLabel; // Bound the new layout display field
     @FXML private ImageView hangmanView;
     @FXML private GridPane keyboardGrid;
     @FXML private Button resetButton;
@@ -36,6 +37,10 @@ public class GameController {
         WordRepository repo = new WordRepository();
         String word = repo.getRandomWord(MenuController.selectedCategory, MenuController.selectedDifficulty);
         game = new HangmanModel(word, MenuController.selectedDifficulty);
+        
+        // Reset styles and labels back to clean defaults
+        if (wordLabel != null) wordLabel.setStyle("-fx-text-fill: #212529;");
+        if (correctWordLabel != null) correctWordLabel.setText("");
         
         updateUI();
         buildKeyboard();
@@ -63,7 +68,9 @@ public class GameController {
     }
 
     private void updateUI() {
-        if (wordLabel != null) wordLabel.setText(game.getHiddenWord());
+        if (wordLabel != null && !game.isLose() && !game.isWin()) {
+            wordLabel.setText(game.getHiddenWord());
+        }
         
         if (wrongLabel != null) {
             wrongLabel.setText("Category: " + MenuController.selectedCategory + 
@@ -91,11 +98,25 @@ public class GameController {
 
         if (game.isWin()) {
             if (timer != null) timer.stop();
-            wordLabel.setText("YOU WIN! Word: " + game.getWordToGuess());
+            wordLabel.setText("YOU WIN!");
+            wordLabel.setStyle("-fx-text-fill: #198754;"); // Green color for winning text
+            if (correctWordLabel != null) {
+                correctWordLabel.setText("Word was: " + game.getWordToGuess());
+                correctWordLabel.setStyle("-fx-text-fill: #198754;"); // Green color for the word
+            }
             disableAllButtons();
         } else if (game.isLose()) {
             if (timer != null) timer.stop();
-            wordLabel.setText("GAME OVER! Word: " + game.getWordToGuess());
+            
+            // FIXED: Only display "GAME OVER" in bright red color at the top text section
+            wordLabel.setText("GAME OVER!");
+            wordLabel.setStyle("-fx-text-fill: #dc3545;"); 
+            
+            // FIXED: Place the secret answer at the bottom right above the keyboard text line styled in green
+            if (correctWordLabel != null) {
+                correctWordLabel.setText("Correct Word: " + game.getWordToGuess());
+                correctWordLabel.setStyle("-fx-text-fill: #198754;"); 
+            }
             disableAllButtons();
         }
     }
@@ -108,8 +129,6 @@ public class GameController {
 
     private void buildKeyboard() {
         keyboardGrid.getChildren().clear();
-        
-        // Center the keyboard grid layout horizontally and vertically
         keyboardGrid.setAlignment(javafx.geometry.Pos.CENTER);
         keyboardGrid.setHgap(12.0); 
         keyboardGrid.setVgap(12.0);
@@ -121,13 +140,8 @@ public class GameController {
             for (char c : row.toCharArray()) {
                 Button btn = new Button(String.valueOf(c));
                 btn.getStyleClass().add("keyboard-button");
-                
-                // Enlarge buttons for better gameplay interaction
                 btn.setPrefSize(60, 55); 
-                
-                // Set bold text styling and larger font size
                 btn.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;");
-                
                 btn.setOnAction(e -> handleGuess(c, btn));
                 keyboardGrid.add(btn, colNum, rowNum);
                 colNum++;
