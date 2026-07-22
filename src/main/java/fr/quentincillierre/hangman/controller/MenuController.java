@@ -12,7 +12,8 @@ public class MenuController {
     @FXML private ComboBox<String> categoryBox;
     @FXML private ComboBox<String> difficultyBox;
 
-    public static String selectedCategory = "Programming";
+      
+    public static String selectedCategory = "Words A - G";
     public static String selectedDifficulty = "Medium";
 
     @FXML
