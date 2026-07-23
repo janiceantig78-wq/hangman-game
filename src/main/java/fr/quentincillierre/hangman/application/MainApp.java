@@ -7,18 +7,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-    
+
     private static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         primaryStage.setTitle("Hangman Game");
-        
-        // 1. Preload audio clips at startup for instant, zero-lag playback
-        preloadGameAudio();
 
-        // 2. Load the initial view
+        // FIXED: Added absolute forward slash root indicator
         switchScene("/menu-view.fxml");
         primaryStage.show();
     }
@@ -40,10 +37,10 @@ public class MainApp extends Application {
             if (fxmlUrl == null) {
                 throw new IllegalStateException("Cannot find layout asset file at path: " + fxmlPath);
             }
-            
+
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
-            
+
             Scene scene = primaryStage.getScene();
             if (scene == null) {
                 scene = new Scene(root);
@@ -51,16 +48,12 @@ public class MainApp extends Application {
             } else {
                 scene.setRoot(root);
             }
-            
-            // Re-apply style.css cleanly without duplicating stylesheet entries
-            java.net.URL cssUrl = MainApp.class.getResource("/style.css");
-            if (cssUrl != null) {
-                String cssPath = cssUrl.toExternalForm();
-                if (!scene.getStylesheets().contains(cssPath)) {
-                    scene.getStylesheets().add(cssPath);
-                }
+
+            // Re-apply styles if style.css exists
+            if (MainApp.class.getResource("/style.css") != null) {
+                scene.getStylesheets().add(MainApp.class.getResource("/style.css").toExternalForm());
             }
-            
+
         } catch (Exception e) {
             System.err.println("Error changing scenes to " + fxmlPath + ": " + e.getMessage());
             e.printStackTrace();
