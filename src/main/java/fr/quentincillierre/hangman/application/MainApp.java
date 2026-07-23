@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;~
+import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
@@ -14,15 +14,12 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         primaryStage.setTitle("Hangman Game");
-
-        // FIXED: Added absolute forward slash root indicator
         switchScene("/menu-view.fxml");
         primaryStage.show();
     }
 
     public static void switchScene(String fxmlPath) {
         try {
-            // FIXED: Uses full absolute path tracking
             java.net.URL fxmlUrl = MainApp.class.getResource(fxmlPath);
             if (fxmlUrl == null) {
                 throw new IllegalStateException("Cannot find layout asset file at path: " + fxmlPath);
@@ -39,7 +36,6 @@ public class MainApp extends Application {
                 scene.setRoot(root);
             }
 
-            // Re-apply styles if style.css exists
             if (MainApp.class.getResource("/style.css") != null) {
                 scene.getStylesheets().add(MainApp.class.getResource("/style.css").toExternalForm());
             }

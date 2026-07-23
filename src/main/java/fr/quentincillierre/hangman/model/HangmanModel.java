@@ -17,14 +17,8 @@ public class HangmanModel {
         this.currentWrongs = 0;
         this.playerPoints = 100; // Baseline points for hint spending
 
-        // Dynamic difficulty setting rules
-        if (difficulty.equalsIgnoreCase("Easy")) {
-            this.maxWrongs = 10;
-        } else if (difficulty.equalsIgnoreCase("Medium")) {
-            this.maxWrongs = 7;
-        } else {
-            this.maxWrongs = 5; // Hard mode threshold
-        }
+        /// Dynamic difficulty setting rules
+        this.maxWrongs = 10;
     }
 
     public String getWordToGuess() {
@@ -53,7 +47,8 @@ public class HangmanModel {
 
     public void tryLetter(char letter) {
         char upperLetter = Character.toUpperCase(letter);
-        if (guessedLetters.contains(upperLetter)) return;
+        if (guessedLetters.contains(upperLetter))
+            return;
 
         guessedLetters.add(upperLetter);
         if (!wordToGuess.contains(String.valueOf(upperLetter))) {
@@ -75,7 +70,8 @@ public class HangmanModel {
 
     public boolean isWin() {
         for (char c : wordToGuess.toCharArray()) {
-            if (!guessedLetters.contains(c)) return false;
+            if (!guessedLetters.contains(c))
+                return false;
         }
         return true;
     }

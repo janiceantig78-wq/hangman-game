@@ -8,16 +8,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="825.0" prefWidth="1193.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com" xmlns:fx="http://javafx.com" fx:controller="fr.quentincillierre.hangman.controller.GameController">
+<AnchorPane prefHeight="825.0" prefWidth="1193.0" styleClass="game-root"
+            xmlns="http://javafx.com" xmlns:fx="http://javafx.com"
+            fx:controller="fr.quentincillierre.hangman.controller.GameController">
    <children>
       <!-- Top Action Controls Header Area -->
-      <Button fx:id="resetButton" layoutX="50.0" layoutY="30.0" onAction="#resetGame" text="🔄 Reset Game" style="-fx-font-size: 13px; -fx-padding: 6 12; -fx-cursor: hand;" />
-      <Button fx:id="backMenuButton" layoutX="175.0" layoutY="30.0" onAction="#handleBackToMenu" text="🔙 Back to Menu" style="-fx-font-size: 13px; -fx-padding: 6 12; -fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;" />
-      <Button fx:id="hintButton" layoutX="315.0" layoutY="30.0" onAction="#handleTriggerHint" text="💡 Use Hint (-30 pts)" style="-fx-background-color: #ffc107; -fx-font-size: 13px; -fx-padding: 6 12; -fx-font-weight: bold; -fx-cursor: hand;" />
+      <Button fx:id="resetButton" layoutX="50.0" layoutY="30.0" onAction="#resetGame" text="🔄 Reset Game" />
+<Button fx:id="backMenuButton" layoutX="175.0" layoutY="30.0" onAction="#handleBackToMenu" text="🔙 Back to Menu" />
+<Button fx:id="hintButton" layoutX="315.0" layoutY="30.0" onAction="#handleTriggerHint" text="💡 Use Hint (-30 pts)" />
 
-      <!-- Live Statistics Scoreboard Dashboards -->
-      <Label fx:id="timerLabel" layoutX="880.0" layoutY="35.0" text="Time: 60s" textFill="#dc3545" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
-      <Label fx:id="pointsLabel" layoutX="1010.0" layoutY="35.0" text="Points: 100" textFill="#198754" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+<Label fx:id="timerLabel" layoutX="880.0" layoutY="35.0" text="Time: 60s" />
+<Label fx:id="pointsLabel" layoutX="1010.0" layoutY="35.0" text="Points: 100" />
 
       <!-- Centered Structural Information Labels -->
       <Label fx:id="titleLabel" layoutX="475.0" layoutY="26.0" text="GUESS THE WORD!" textFill="#220d75">
@@ -26,7 +27,7 @@
          </font>
       </Label>
 
-      <Label fx:id="wrongLabel" layoutX="264.0" layoutY="90.0" prefWidth="665.0" text="Category: Loading..." alignment="CENTER" textFill="#495057">
+      <Label fx:id="wrongLabel" layoutX="264.0" layoutY="90.0" prefWidth="665.0" text="Category: Loading..." alignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -39,11 +40,15 @@
       </Label>
 
       <!-- Center Aligned Horizontal Box to Center the Gallows Drawing Perfectly -->
-      <HBox layoutX="0.0" layoutY="210.0" prefWidth="1193.0" alignment="CENTER">
+<HBox layoutX="0.0" layoutY="230.0" prefWidth="1193.0" alignment="CENTER">
+   <children>
+      <HBox fx:id="hangmanBox" alignment="CENTER" styleClass="hangman-box">
          <children>
-            <ImageView fx:id="hangmanView" fitHeight="338.0" fitWidth="540.0" preserveRatio="true" />
+            <ImageView fx:id="hangmanView" fitHeight="290.0" fitWidth="460.0" preserveRatio="true" />
          </children>
       </HBox>
+   </children>
+</HBox>
 
       <!-- End-Game Hidden Target Display Label -->
       <Label fx:id="correctWordLabel" layoutX="264.0" layoutY="565.0" prefWidth="665.0" alignment="CENTER" text="">

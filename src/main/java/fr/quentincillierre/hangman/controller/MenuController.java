@@ -15,7 +15,7 @@ public class MenuController {
 
     @FXML private ComboBox<String> categoryBox;
     @FXML private ComboBox<String> difficultyBox;
-    @FXML private Label highScoresLabel; // Binds your newly added scoreboard row element
+    @FXML private Label highScoresLabel;
 
     public static String selectedCategory = "Words A - G";
     public static String selectedDifficulty = "Medium";
@@ -23,18 +23,17 @@ public class MenuController {
     @FXML
     public void initialize() {
         WordRepository repo = new WordRepository();
-        
+
         if (categoryBox != null) {
             categoryBox.setItems(FXCollections.observableArrayList(repo.getAvailableCategories()));
             categoryBox.setValue(selectedCategory);
         }
-        
+
         if (difficultyBox != null) {
             difficultyBox.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
             difficultyBox.setValue(selectedDifficulty);
         }
 
-        // DYNAMIC LEADERBOARD RENDERING: Loads numerical runs data straight from text files
         if (highScoresLabel != null) {
             List<Integer> historicalScores = ScoreManager.loadHighScores();
             if (!historicalScores.isEmpty()) {
@@ -61,7 +60,7 @@ public class MenuController {
         } else {
             selectedDifficulty = "Medium";
         }
-        
+
         MainApp.switchScene("/game-view.fxml");
     }
 
@@ -70,23 +69,4 @@ public class MenuController {
         Platform.exit();
         System.exit(0);
     }
-        // Keep track of the active theme state globally across menu changes
-    private static boolean isDarkModeActive = false;
-
-    @FXML
-    private void handleToggleTheme(javafx.event.ActionEvent event) {
-        isDarkModeActive = !isDarkModeActive;
-        
-        // Find the active window canvas scene hierarchy
-        javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
-        
-        if (isDarkModeActive) {
-            // Apply the dark-theme CSS block properties instantly
-            scene.getRoot().getStyleClass().add("dark-theme");
-        } else {
-            // Remove the dark-theme CSS properties to return to light theme default settings
-            scene.getRoot().getStyleClass().remove("dark-theme");
-        }
-    }
-
 }

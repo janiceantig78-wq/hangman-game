@@ -16,16 +16,26 @@ import javafx.util.Duration;
 import java.io.InputStream;
 
 public class GameController {
-    @FXML private Label wordLabel;
-    @FXML private Label wrongLabel;
-    @FXML private Label timerLabel;
-    @FXML private Label pointsLabel; 
-    @FXML private Label correctWordLabel; 
-    @FXML private ImageView hangmanView;
-    @FXML private GridPane keyboardGrid;
-    @FXML private Button resetButton;
-    @FXML private Button backMenuButton;
-    @FXML private Button hintButton; 
+    @FXML
+    private Label wordLabel;
+    @FXML
+    private Label wrongLabel;
+    @FXML
+    private Label timerLabel;
+    @FXML
+    private Label pointsLabel;
+    @FXML
+    private Label correctWordLabel;
+    @FXML
+    private ImageView hangmanView;
+    @FXML
+    private GridPane keyboardGrid;
+    @FXML
+    private Button resetButton;
+    @FXML
+    private Button backMenuButton;
+    @FXML
+    private Button hintButton;
 
     private HangmanModel game;
     private Timeline timer;
@@ -40,10 +50,12 @@ public class GameController {
         WordRepository repo = new WordRepository();
         String word = repo.getRandomWord(MenuController.selectedCategory, MenuController.selectedDifficulty);
         game = new HangmanModel(word, MenuController.selectedDifficulty);
-        
-        if (wordLabel != null) wordLabel.setStyle("-fx-text-fill: #212529;");
-        if (correctWordLabel != null) correctWordLabel.setText("");
-        
+
+        if (wordLabel != null)
+            wordLabel.setStyle("-fx-text-fill: #ffffff;");
+        if (correctWordLabel != null)
+            correctWordLabel.setText("");
+
         updateUI();
         buildKeyboard();
         startTimer();
@@ -51,7 +63,8 @@ public class GameController {
 
     @FXML
     public void resetGame() {
-        if (timer != null) timer.stop();
+        if (timer != null)
+            timer.stop();
         timeLeft = 60;
         keyboardGrid.getChildren().clear();
         startGameSession();
@@ -67,12 +80,13 @@ public class GameController {
 
     @FXML
     private void handleTriggerHint() {
-        if (game.isWin() || game.isLose() || game.getPlayerPoints() < 30) return;
-        
+        if (game.isWin() || game.isLose() || game.getPlayerPoints() < 30)
+            return;
+
         char hintLetter = game.getRevealHintLetter();
         if (hintLetter != ' ') {
             game.deductPoints(30);
-            game.tryLetter(hintLetter); 
+            game.tryLetter(hintLetter);
             updateUI();
         }
     }
@@ -81,22 +95,22 @@ public class GameController {
         if (wordLabel != null && !game.isLose() && !game.isWin()) {
             wordLabel.setText(game.getHiddenWord());
         }
-        
+
         if (wrongLabel != null) {
-            wrongLabel.setText("Category: " + MenuController.selectedCategory + 
-                               " | Mistakes: " + game.getCurrentWrongs() + " / " + game.getMaxWrongs());
+            wrongLabel.setText("Category: " + MenuController.selectedCategory +
+                    " | Mistakes: " + game.getCurrentWrongs() + " / " + game.getMaxWrongs());
         }
 
         if (pointsLabel != null) {
             pointsLabel.setText("Points: " + game.getPlayerPoints());
         }
-        
+
         int step = game.getCurrentWrongs();
         if (game.getMaxWrongs() == 5) {
-            step = game.getCurrentWrongs() * 2; 
+            step = game.getCurrentWrongs() * 2;
         }
         step = Math.min(step, 10);
-        
+
         try {
             InputStream imgStream = getClass().getResourceAsStream("/pictures/" + step + "-hangman.png");
             if (imgStream != null) {
@@ -107,32 +121,34 @@ public class GameController {
         }
 
         if (game.isWin()) {
-            if (timer != null) timer.stop();
-            
+            if (timer != null)
+                timer.stop();
+
             // PROGRESSIVE SCORING CALCULATION
-            int multiplier = MenuController.selectedDifficulty.equalsIgnoreCase("Hard") ? 3 : 
-                             MenuController.selectedDifficulty.equalsIgnoreCase("Medium") ? 2 : 1;
+            int multiplier = MenuController.selectedDifficulty.equalsIgnoreCase("Hard") ? 3
+                    : MenuController.selectedDifficulty.equalsIgnoreCase("Medium") ? 2 : 1;
             int finalCalculatedScore = game.getPlayerPoints() + (timeLeft * multiplier);
-            
+
             // Save the score permanently to your local highscores file
             ScoreManager.saveHighScore(finalCalculatedScore);
 
             wordLabel.setText("YOU WIN! SCORE: " + finalCalculatedScore + " pts");
-            wordLabel.setStyle("-fx-text-fill: #198754;"); 
-            
+            wordLabel.setStyle("-fx-text-fill: #198754;");
+
             if (correctWordLabel != null) {
                 correctWordLabel.setText("Word was: " + game.getWordToGuess());
-                correctWordLabel.setStyle("-fx-text-fill: #198754;"); 
+                correctWordLabel.setStyle("-fx-text-fill: #198754;");
             }
             disableAllButtons();
         } else if (game.isLose()) {
-            if (timer != null) timer.stop();
+            if (timer != null)
+                timer.stop();
             wordLabel.setText("GAME OVER!");
-            wordLabel.setStyle("-fx-text-fill: #dc3545;"); 
-            
+            wordLabel.setStyle("-fx-text-fill: #dc3545;");
+
             if (correctWordLabel != null) {
                 correctWordLabel.setText("Correct Word: " + game.getWordToGuess());
-                correctWordLabel.setStyle("-fx-text-fill: #198754;"); 
+                correctWordLabel.setStyle("-fx-text-fill: #198754;");
             }
             disableAllButtons();
         }
@@ -140,24 +156,25 @@ public class GameController {
 
     private void disableAllButtons() {
         for (javafx.scene.Node node : keyboardGrid.getChildren()) {
-            if (node instanceof Button) ((Button) node).setDisable(true);
+            if (node instanceof Button)
+                ((Button) node).setDisable(true);
         }
     }
 
     private void buildKeyboard() {
         keyboardGrid.getChildren().clear();
         keyboardGrid.setAlignment(javafx.geometry.Pos.CENTER);
-        keyboardGrid.setHgap(12.0); 
+        keyboardGrid.setHgap(12.0);
         keyboardGrid.setVgap(12.0);
 
-        String[] rows = {"ABCDEFGHIJKLM", "NOPQRSTUVWXYZ"};
+        String[] rows = { "ABCDEFGHIJKLM", "NOPQRSTUVWXYZ" };
         int rowNum = 0;
         for (String row : rows) {
             int colNum = 0;
             for (char c : row.toCharArray()) {
                 Button btn = new Button(String.valueOf(c));
                 btn.getStyleClass().add("keyboard-button");
-                btn.setPrefSize(60, 55); 
+                btn.setPrefSize(60, 55);
                 btn.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;");
                 btn.setOnAction(e -> handleGuess(c, btn));
                 keyboardGrid.add(btn, colNum, rowNum);
@@ -168,7 +185,8 @@ public class GameController {
     }
 
     private void handleGuess(char c, Button btn) {
-        if (game.isWin() || game.isLose()) return;
+        if (game.isWin() || game.isLose())
+            return;
         btn.setDisable(true);
         game.tryLetter(c);
         updateUI();
@@ -177,10 +195,12 @@ public class GameController {
     private void startTimer() {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             timeLeft--;
-            if (timerLabel != null) timerLabel.setText("Time: " + timeLeft + "s");
+            if (timerLabel != null)
+                timerLabel.setText("Time: " + timeLeft + "s");
             if (timeLeft <= 0) {
                 timer.stop();
-                while (!game.isLose()) game.tryLetter('X');
+                while (!game.isLose())
+                    game.tryLetter('X');
                 updateUI();
             }
         }));
