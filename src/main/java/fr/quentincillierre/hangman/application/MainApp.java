@@ -18,6 +18,18 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Preloads all game sound effects into memory.
+     */
+    private void preloadGameAudio() {
+        SoundEngine.preload("correct.wav");
+        SoundEngine.preload("wrong.wav");
+        SoundEngine.preload("victory.wav"); // Fixed name
+        SoundEngine.preload("gameover.wav");
+        // SoundEngine.preload("click.wav"); // Comment out or remove until click.wav is
+        // added
+    }
+
     public static void switchScene(String fxmlPath) {
         try {
             java.net.URL fxmlUrl = MainApp.class.getResource(fxmlPath);

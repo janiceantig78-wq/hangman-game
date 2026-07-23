@@ -13,9 +13,12 @@ import java.util.stream.Collectors;
 
 public class MenuController {
 
-    @FXML private ComboBox<String> categoryBox;
-    @FXML private ComboBox<String> difficultyBox;
-    @FXML private Label highScoresLabel;
+    @FXML
+    private ComboBox<String> categoryBox;
+    @FXML
+    private ComboBox<String> difficultyBox;
+    @FXML
+    private Label highScoresLabel;
 
     public static String selectedCategory = "Words A - G";
     public static String selectedDifficulty = "Medium";
