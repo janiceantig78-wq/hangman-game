@@ -2,22 +2,55 @@ package fr.quentincillierre.hangman.application;
 
 import javafx.scene.media.AudioClip;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SoundEngine {
+
+    private static final Map<String, AudioClip> SOUND_CACHE = new HashMap<>();
+    private static boolean isMuted = false;
+
     /**
-     * Plays a short audio clip file located locally in the resources/audio folder.
+     * Preloads an audio file into RAM so it plays instantly when triggered.
      */
-    public static void playEffect(String soundFileName) {
+    public static void preload(String soundFileName) {
+        if (SOUND_CACHE.containsKey(soundFileName)) return;
+
         try {
             URL resource = SoundEngine.class.getResource("/audio/" + soundFileName);
             if (resource != null) {
                 AudioClip clip = new AudioClip(resource.toExternalForm());
-                clip.play();
+                SOUND_CACHE.put(soundFileName, clip);
             } else {
-                System.err.println("Audio asset file not found: " + soundFileName);
+                System.err.println("[SoundEngine] File not found: /audio/" + soundFileName);
             }
         } catch (Exception e) {
-            System.err.println("Audio playback bypassed: " + e.getMessage());
+            System.err.println("[SoundEngine] Error loading " + soundFileName + ": " + e.getMessage());
         }
+    }
+
+    /**
+     * Plays a sound effect instantly.
+     */
+    public static void playEffect(String soundFileName) {
+        if (isMuted) return;
+
+        // If sound wasn't preloaded, try loading it on the fly
+        if (!SOUND_CACHE.containsKey(soundFileName)) {
+            preload(soundFileName);
+        }
+
+        AudioClip clip = SOUND_CACHE.get(soundFileName);
+        if (clip != null) {
+            clip.play();
+        }
+    }
+
+    public static void setMuted(boolean muted) {
+        isMuted = muted;
+    }
+
+    public static boolean isMuted() {
+        return isMuted;
     }
 }

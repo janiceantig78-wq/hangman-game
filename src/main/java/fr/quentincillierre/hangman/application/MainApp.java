@@ -15,14 +15,27 @@ public class MainApp extends Application {
         primaryStage = stage;
         primaryStage.setTitle("Hangman Game");
         
-        // FIXED: Added absolute forward slash root indicator
+        // 1. Preload audio clips at startup for instant, zero-lag playback
+        preloadGameAudio();
+
+        // 2. Load the initial view
         switchScene("/menu-view.fxml");
         primaryStage.show();
     }
 
+    /**
+     * Preloads all game sound effects into memory.
+     */
+  private void preloadGameAudio() {
+    SoundEngine.preload("correct.wav");
+    SoundEngine.preload("wrong.wav");
+    SoundEngine.preload("victory.wav");  // Fixed name
+    SoundEngine.preload("gameover.wav");
+    // SoundEngine.preload("click.wav");  // Comment out or remove until click.wav is added
+}
+
     public static void switchScene(String fxmlPath) {
         try {
-            // FIXED: Uses full absolute path tracking
             java.net.URL fxmlUrl = MainApp.class.getResource(fxmlPath);
             if (fxmlUrl == null) {
                 throw new IllegalStateException("Cannot find layout asset file at path: " + fxmlPath);
@@ -39,9 +52,13 @@ public class MainApp extends Application {
                 scene.setRoot(root);
             }
             
-            // Re-apply styles if style.css exists
-            if (MainApp.class.getResource("/style.css") != null) {
-                scene.getStylesheets().add(MainApp.class.getResource("/style.css").toExternalForm());
+            // Re-apply style.css cleanly without duplicating stylesheet entries
+            java.net.URL cssUrl = MainApp.class.getResource("/style.css");
+            if (cssUrl != null) {
+                String cssPath = cssUrl.toExternalForm();
+                if (!scene.getStylesheets().contains(cssPath)) {
+                    scene.getStylesheets().add(cssPath);
+                }
             }
             
         } catch (Exception e) {
