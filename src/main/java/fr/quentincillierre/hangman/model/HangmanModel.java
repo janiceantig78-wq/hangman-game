@@ -21,7 +21,7 @@ public class HangmanModel {
         if (difficulty.equalsIgnoreCase("Easy")) {
             this.maxWrongs = 10;
         } else if (difficulty.equalsIgnoreCase("Medium")) {
-            this.maxWrongs = 7;
+            this.maxWrongs = 10;
         } else {
             this.maxWrongs = 5; // Hard mode threshold
         }
