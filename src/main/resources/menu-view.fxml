@@ -28,7 +28,7 @@
             </Label>
 
             <!-- Subtitle -->
-            <Label fx:id="subtitleLabel" text="Can you save the character in time?">
+            <Label fx:id="subtitleLabel" text="CAN YOU SAVE YOURSELF IN TIME?">
                <font>
                   <Font name="Arial Italic" size="18.0" />
                </font>
